@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    let gridItems = [GridItem(.flexible()), GridItem(.flexible())]
+    let gridItems = [GridItem(.adaptive(minimum: 150), spacing: 16), GridItem(.adaptive(minimum: 150), spacing: 16)]
     let gridTiles = [
         TileItem(iconName: "dollarsign.arrow.circlepath", title: "Interests", destination: {AnyView(LoansAndSavingsView())}),
         TileItem(iconName: "dollarsign.bank.building", title: "Loans & Savings", destination: {AnyView(LoansAndSavingsView())}),

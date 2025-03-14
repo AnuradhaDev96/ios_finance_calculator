@@ -27,10 +27,9 @@ struct LoansAndSavingsView: View {
     @FocusState private var isPaymentFocused: Bool
     @FocusState private var isPaymentsPerYearFocused: Bool
     @FocusState private var isCompundsPerYearFocused: Bool
-
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("What do you need to calculate?")) {
                     ResultSelectionChips(selectedValue: selectedValue)
