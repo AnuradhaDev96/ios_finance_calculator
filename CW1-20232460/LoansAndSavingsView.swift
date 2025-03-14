@@ -18,6 +18,7 @@ struct LoansAndSavingsView: View {
     
     // Toggle
     @State private var isEnd: Bool = true
+    @StateObject private var selectedValue: ResultSelectionViewModel = ResultSelectionViewModel()
     
     // Focus states
     @FocusState private var isPresentFocused: Bool
@@ -26,10 +27,15 @@ struct LoansAndSavingsView: View {
     @FocusState private var isPaymentFocused: Bool
     @FocusState private var isPaymentsPerYearFocused: Bool
     @FocusState private var isCompundsPerYearFocused: Bool
+
     
     var body: some View {
         NavigationView {
             Form {
+                Section(header: Text("What do you need to calculate?")) {
+                    ResultSelectionChips(selectedValue: selectedValue)
+                        .listRowBackground(Color.clear)
+                }
                 Section(header: Text("User Inputs")) {
                     CustomNumberField(placeholder: "Present Value", text: $presentValue, isFocused: $isPresentFocused)
                     CustomNumberField(placeholder: "Future Value", text: $futureValue, isFocused: $isFutureFocused)
@@ -66,6 +72,21 @@ struct LoansAndSavingsView: View {
         isCompundsPerYearFocused = false
     }
 }
+
+enum ResultType: String, CaseIterable, Identifiable {
+    case simple = "Simple Interest"
+    case compound = "Compound Interest"
+    case present = "Present Value"
+    case future = "Future Value"
+    
+    var id: String {self.rawValue}
+}
+
+//class ResultTypeClass: Identifiable {
+//    let id = UUID()
+//    let rowValue: String = ""
+//    @State var isSelected: Bool = false
+//}
 
 #Preview {
     LoansAndSavingsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)

@@ -13,7 +13,7 @@ struct ContentView: View {
     let gridTiles = [
         TileItem(iconName: "dollarsign.arrow.circlepath", title: "Interests", destination: {AnyView(LoansAndSavingsView())}),
         TileItem(iconName: "dollarsign.bank.building", title: "Loans & Savings", destination: {AnyView(LoansAndSavingsView())}),
-        TileItem(iconName: "dollarsign.circle", title: "Mortgage", destination: {AnyView(LoansAndSavingsView())}),
+        TileItem(iconName: "dollarsign.circle", title: "Mortgage", destination: {AnyView(MortgageView())}),
         TileItem(iconName: "questionmark.circle", title: "Help", destination: {AnyView(LoansAndSavingsView())}),
     ]
     
