@@ -10,7 +10,7 @@ import SwiftUI
 struct ResultContainer: View {
     let title: String
     
-    @ObservedObject var result: InterestResultViewModel
+    @ObservedObject var result: SimpleInterestResultViewModel
 
     var body: some View {
         VStack(alignment: .center, spacing: 2) {

@@ -9,63 +9,40 @@ import SwiftUI
 
 struct SimpleInterestView: View {
     // Text ediitors
-    @State private var presentValue: String = ""
-    @State private var futureValue: String = ""
-    @State private var interest: String = ""
-    @State private var payment: String = ""
-    @State private var paymentsPerYear: String = ""
-    @State private var compoundsPerYear: String = ""
+    @State private var principalAmount: String = ""
+    @State private var interestRate: String = ""
+    @State private var duration: String = ""
     
     // Toggle
-    @ObservedObject var result: InterestResultViewModel
+    @ObservedObject var result: SimpleInterestResultViewModel
     
-    // Focus states
-    @FocusState private var isPresentFocused: Bool
-    @FocusState private var isFutureFocused: Bool
-    @FocusState private var isInterestFocused: Bool
-    @FocusState private var isPaymentFocused: Bool
-    @FocusState private var isPaymentsPerYearFocused: Bool
-    @FocusState private var isCompundsPerYearFocused: Bool
+    var isFormInvalid: Bool {
+        return principalAmount.isEmpty || interestRate.isEmpty || duration.isEmpty
+    }
     
     var body: some View {
         Section(header: Text("User Inputs")) {
             VStack{
-                
-                CustomNumberField(placeholder: "Principal Amount", text: $presentValue, isFocused: $isPresentFocused)
-                CustomNumberField(placeholder: "Interest Rate", text: $interest, isFocused: $isInterestFocused, suffix: "%")
-                CustomNumberField(placeholder: "Duration", text: $paymentsPerYear, isFocused: $isPaymentsPerYearFocused, suffix: "years")
+                CustomNumberField(placeholder: "Principal Amount", text: $principalAmount)
+                CustomNumberField(placeholder: "Interest Rate", text: $interestRate, suffix: "%")
+                CustomNumberField(placeholder: "Duration", text: $duration, suffix: "years")
                 
                 Toggle("Show Future Value", isOn: $result.showFutureValue).padding(.top, 10)
                 
                 Button(action: {
-//                    removeFocus()
-//                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                    print("clicked calc")
-                    result.calculateResult(annualInterest: interest, periodInYears: paymentsPerYear, principal: presentValue)
+                    result.calculateResult(annualInterest: interestRate, periodInYears: duration, principal: principalAmount)
                 }) {
                     Text("Calculate")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .disabled(isFormInvalid)
+                        .background(isFormInvalid ? Color.gray.opacity(0.7) : Color.blue)
                         .cornerRadius(10)
-                }.padding()
-                
-                
+                }
+                .padding()
             }
-//            .gesture(
-//                TapGesture().onEnded(removeFocus)
-//            )
         }
-    }
-    
-    private func removeFocus() -> Void {
-        isPresentFocused = false
-        isFutureFocused = false
-        isInterestFocused = false
-        isPaymentFocused = false
-        isPaymentsPerYearFocused = false
-        isCompundsPerYearFocused = false
     }
 }

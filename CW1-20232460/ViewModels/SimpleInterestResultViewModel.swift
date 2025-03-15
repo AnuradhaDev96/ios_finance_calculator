@@ -7,7 +7,7 @@
 
 import Foundation
 
-class InterestResultViewModel: ObservableObject {
+class SimpleInterestResultViewModel: ObservableObject {
     private let calculationService: ICalculationService
     
     init(calculationService: ICalculationService) {

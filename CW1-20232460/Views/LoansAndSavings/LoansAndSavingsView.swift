@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoansAndSavingsView: View {
     @StateObject private var expectedResult: ResultSelectionViewModel = ResultSelectionViewModel()
-    @StateObject private var result: InterestResultViewModel = InterestResultViewModel(calculationService: CalculationService())
+    @StateObject private var result: SimpleInterestResultViewModel = SimpleInterestResultViewModel(calculationService: CalculationService())
     
     var body: some View {
         NavigationStack {

@@ -13,19 +13,14 @@ struct MortgageView: View {
     @State private var payment: String = ""
     @State private var noOfYears: String = ""
     
-    @FocusState private var isLoanAmountFocused: Bool
-    @FocusState private var isInterestFocused: Bool
-    @FocusState private var isPaymentFocused: Bool
-    @FocusState private var isNoOfYearsFocused: Bool
-    
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    CustomNumberField(placeholder: "Loan Amount", text: $loanAmount, isFocused: $isLoanAmountFocused)
-                    CustomNumberField(placeholder: "Interest", text: $interest, isFocused: $isInterestFocused)
-                    CustomNumberField(placeholder: "Payment", text: $payment, isFocused: $isPaymentFocused)
-                    CustomNumberField(placeholder: "No. of Years", text: $noOfYears, isFocused: $isNoOfYearsFocused)
+                    CustomNumberField(placeholder: "Loan Amount", text: $loanAmount)
+                    CustomNumberField(placeholder: "Interest", text: $interest)
+                    CustomNumberField(placeholder: "Payment", text: $payment)
+                    CustomNumberField(placeholder: "No. of Years", text: $noOfYears)
                 }
             }
             .navigationBarTitleDisplayMode(.inline) // Makes title smaller
