@@ -38,7 +38,7 @@ struct LoansAndSavingsView: View {
                 Section(header: Text("User Inputs")) {
                     CustomNumberField(placeholder: "Present Value", text: $presentValue, isFocused: $isPresentFocused)
                     CustomNumberField(placeholder: "Future Value", text: $futureValue, isFocused: $isFutureFocused)
-                    CustomNumberField(placeholder: "Interest", text: $interest, isFocused: $isInterestFocused)
+                    CustomNumberField(placeholder: "Interest", text: $interest, isFocused: $isInterestFocused, suffix: "%")
                     CustomNumberField(placeholder: "Payment", text: $payment, isFocused: $isPaymentFocused)
                     CustomNumberField(placeholder: "No. of Payments Per Year", text: $paymentsPerYear, isFocused: $isPaymentsPerYearFocused)
                     CustomNumberField(placeholder: "Compounds Per Year", text: $compoundsPerYear, isFocused: $isCompundsPerYearFocused)

@@ -19,7 +19,7 @@ struct MortgageView: View {
     @FocusState private var isNoOfYearsFocused: Bool
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section {
                     CustomNumberField(placeholder: "Loan Amount", text: $loanAmount, isFocused: $isLoanAmountFocused)
@@ -39,4 +39,8 @@ struct MortgageView: View {
             }
         }
     }
+}
+
+#Preview {
+    MortgageView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

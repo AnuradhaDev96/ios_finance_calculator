@@ -11,7 +11,7 @@ struct ResultSelectionChips: View {
     @ObservedObject var selectedValue: ResultSelectionViewModel
     
     var body: some View {
-        Picker("Select type", selection: $selectedValue.selectedResultType) {
+        Picker("I need to calculate:", selection: $selectedValue.selectedResultType) {
             ForEach(ResultType.allCases) { type in
                 Text(type.rawValue)
                     .tint(selectedValue.selectedResultType == type ? Color.blue : Color.gray)
