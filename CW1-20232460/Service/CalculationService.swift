@@ -9,6 +9,10 @@ import Foundation
 
 class CalculationService: ICalculationService {
     func getSimpleInterest(annualInterest: Double, periodInYears: Double, principal: Double) -> Double {
-        return principal + (1 + annualInterest/100 * periodInYears)
+        return principal * annualInterest/100 * periodInYears
+    }
+    
+    func getSimpleInterestFutureValue(annualInterest: Double, periodInYears: Double, principal: Double) -> Double {
+        return principal * (1 + annualInterest/100 * periodInYears)
     }
 }

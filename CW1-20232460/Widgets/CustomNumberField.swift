@@ -16,7 +16,8 @@ struct CustomNumberField: View {
     var body: some View {
         LabeledContent{
             TextField(placeholder, text: $text)
-                .keyboardType(.decimalPad).focused($isFocused)
+                .keyboardType(.decimalPad)
+//                .focused($isFocused)
         } label: {
             Text("\(placeholder):").font(.subheadline)
         }

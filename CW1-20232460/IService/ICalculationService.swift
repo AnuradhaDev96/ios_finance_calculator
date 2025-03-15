@@ -8,5 +8,6 @@
 import Foundation
 
 protocol ICalculationService {
+    func getSimpleInterestFutureValue(annualInterest: Double, periodInYears: Double, principal: Double) -> Double
     func getSimpleInterest(annualInterest: Double, periodInYears: Double, principal: Double) -> Double
 }

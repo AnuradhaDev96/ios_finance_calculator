@@ -22,7 +22,3 @@ struct ResultSelectionChips: View {
         }.pickerStyle(.menu)
     }
 }
-
-class ResultSelectionViewModel: ObservableObject {
-    @Published var selectedResultType: ResultType = .simple
-}
