@@ -26,4 +26,10 @@ class SimpleInterestResultViewModel: ObservableObject {
     @Published var interestAnswer: Double = 0
     @Published var futureValueAnswer: Double = 0
     @Published var showFutureValue: Bool = false
+    
+    func resetModel() {
+        interestAnswer = 0
+        futureValueAnswer = 0
+        showFutureValue = false
+    }
 }

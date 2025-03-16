@@ -20,8 +20,12 @@ struct SimpleInterestView: View {
         return principalAmount.isEmpty || interestRate.isEmpty || duration.isEmpty
     }
     
+    var canResetForm: Bool {
+        return !principalAmount.isEmpty || !interestRate.isEmpty || !duration.isEmpty
+    }
+    
     var body: some View {
-        Section(header: Text("User Inputs")) {
+        Section(header: Text("Variables for Simple Interest")) {
             VStack{
                 CustomNumberField(placeholder: "Principal Amount", text: $principalAmount)
                 CustomNumberField(placeholder: "Interest Rate", text: $interestRate, suffix: "%")
@@ -30,6 +34,7 @@ struct SimpleInterestView: View {
                 Toggle("Show Future Value", isOn: $result.showFutureValue).padding(.top, 10)
                 
                 Button(action: {
+                    hideKeyboard()
                     result.calculateResult(annualInterest: interestRate, periodInYears: duration, principal: principalAmount)
                 }) {
                     Text("Calculate")
@@ -42,7 +47,72 @@ struct SimpleInterestView: View {
                         .cornerRadius(10)
                 }
                 .padding()
+                
+//                if (canResetForm) {
+//                    Button(action: resetForm) {
+//                        HStack(spacing: 10) {
+//                            Image(systemName: "arrow.counterclockwise")
+//                            Text("Reset")
+//                        }
+//                        .font(.headline)
+//                        .foregroundColor(.black)
+//                        .padding(.horizontal)
+//                        .padding(.vertical, 8)
+//                        .background(Color(.systemGray5))
+//                        .clipShape(Capsule())
+//                    }
+//                }
+                
+                SimpleInterestResultCard(result: result)
+            }
+//            .toolbar {
+//                ToolbarItemGroup(placement: .keyboard, content: {
+//                    Spacer()
+//                    Button("Done") {
+//                        hideKeyboard()
+//                    }.font(.headline)
+//                })
+//            }
+        }
+        .listRowBackground(Color.clear)
+    }
+    
+    private func resetForm() {
+        principalAmount = ""
+        interestRate = ""
+        duration = ""
+        result.resetModel()
+    }
+}
+
+struct SimpleInterestResultCard: View {
+    @ObservedObject var result: SimpleInterestResultViewModel
+
+    var body: some View {
+        VStack(alignment: .center, spacing: 2) {
+            Text("Simple Interest")
+                .font(.headline)
+                .foregroundColor(.primary)
+
+            Text("Rs.\(String(format: "%.2f", result.interestAnswer))")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.blue)
+            if (result.showFutureValue) {
+                VStack(alignment: .center, spacing: 2) {
+                    Spacer()
+                    Text("Future Value")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    Text("Rs.\(String(format: "%.2f", result.futureValueAnswer))")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.blue)
+                }
             }
         }
+        .frame(maxWidth: .infinity)
+        .padding()
     }
 }

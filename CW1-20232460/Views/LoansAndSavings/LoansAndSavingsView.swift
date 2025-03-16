@@ -9,31 +9,37 @@ import SwiftUI
 
 struct LoansAndSavingsView: View {
     @StateObject private var expectedResult: ResultSelectionViewModel = ResultSelectionViewModel()
-    @StateObject private var result: SimpleInterestResultViewModel = SimpleInterestResultViewModel(calculationService: CalculationService())
+    @StateObject private var simpleInterestResult: SimpleInterestResultViewModel = SimpleInterestResultViewModel(calculationService: CalculationService())
+    @StateObject private var simpleInterestRateResult: SimpleInterestRateResultViewModel = SimpleInterestRateResultViewModel(calculationService: CalculationService())
     
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("What do you need to calculate?")) {
                     ResultSelectionChips(selectedValue: expectedResult)
-                        .listRowBackground(Color.clear)
+//                        .listRowBackground(Color.clear)
                 }
                 switch(expectedResult.selectedResultType) {
                 case .simple:
-                    SimpleInterestView(result: result)
-                case .compound:
-                    SimpleInterestView(result: result)
+                    SimpleInterestView(result: simpleInterestResult)
+                case .simpleInterestRate:
+                    SimpleInterestRateView(result: simpleInterestRateResult)
                 }
-                ResultContainer(title: expectedResult.selectedResultType.rawValue, result: result)
             }
-            .navigationBarTitleDisplayMode(.inline) // Makes title smaller
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Loans and Savings")
-                        .font(.system(size: 18, weight: .bold)) // Reduce font size to fit width
-                        .lineLimit(1) // Ensure it's in one line
-                        .minimumScaleFactor(0.7) // Adjusts font size dynamically if needed
+                        .font(.system(size: 18, weight: .bold))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
                 }
+//                ToolbarItemGroup(placement: .keyboard, content: {
+//                    Spacer()
+//                    Button("Done") {
+//                        hideKeyboard()
+//                    }.font(.headline)
+//                })
             }
         }
     }
@@ -41,16 +47,10 @@ struct LoansAndSavingsView: View {
 
 enum ResultType: String, CaseIterable, Identifiable {
     case simple = "Simple Interest"
-    case compound = "Compound Interest"
+    case simpleInterestRate = "Simple Interest Rate"
     
     var id: String {self.rawValue}
 }
-
-//class ResultTypeClass: Identifiable {
-//    let id = UUID()
-//    let rowValue: String = ""
-//    @State var isSelected: Bool = false
-//}
 
 #Preview {
     LoansAndSavingsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
