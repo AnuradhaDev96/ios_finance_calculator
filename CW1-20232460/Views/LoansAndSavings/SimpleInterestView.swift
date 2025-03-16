@@ -53,12 +53,9 @@ struct SimpleInterestView: View {
                 }
             }
             .buttonStyle(BorderlessButtonStyle())
-            .alert(result.alertKey, isPresented: $result.isPresented) {
-                Button("Ok", role: .cancel) {
-                    print("current isPresented value: \(result.isPresented)")
-                }
-            } message: {
-                Text(result.message)
+            .alert(result.alertDetails.alertKey, isPresented: $result.alertDetails.isPresented) {}
+            message: {
+                Text(result.alertDetails.message)
             }
 //            .toolbar {
 //                ToolbarItemGroup(placement: .keyboard, content: {

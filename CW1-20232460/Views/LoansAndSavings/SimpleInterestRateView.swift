@@ -51,6 +51,10 @@ struct SimpleInterestRateView: View {
                 }
             }
             .buttonStyle(BorderlessButtonStyle())
+            .alert(result.alertDetails.alertKey, isPresented: $result.alertDetails.isPresented) {}
+            message: {
+                Text(result.alertDetails.message)
+            }
         }
     }
     

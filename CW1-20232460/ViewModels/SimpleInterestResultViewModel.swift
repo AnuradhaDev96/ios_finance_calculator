@@ -15,15 +15,10 @@ class SimpleInterestResultViewModel: ObservableObject {
         self.calculationService = calculationService
     }
     
-    @Published var isPresented: Bool = false
-    @Published var message: String = ""
-    @Published var alertKey: String = ""
+    @Published var alertDetails = AlertDetails()
     
     private func showMessage(alertKey: String, message: String) {
-        self.message = message
-        self.alertKey = alertKey
-        
-        isPresented = true
+        alertDetails = AlertDetails(isPresented: true, message: message, alertKey: alertKey)
     }
     
     func calculateResult(annualInterest: String, periodInYears: String, principal: String) {
@@ -32,7 +27,6 @@ class SimpleInterestResultViewModel: ObservableObject {
               let t = Double(periodInYears)
         else {
             showMessage(alertKey: "Invalid input!", message: "Please enter valid numbers.")
-            print("cannot convert//ll")
             return
         }
         

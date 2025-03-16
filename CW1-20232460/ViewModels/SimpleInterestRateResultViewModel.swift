@@ -16,11 +16,20 @@ class SimpleInterestRateResultViewModel: ObservableObject {
     }
     
     @Published var interestRateAnswer: Double = 0
+    @Published var alertDetails = AlertDetails()
+    
+    private func showMessage(alertKey: String, message: String) {
+        alertDetails = AlertDetails(isPresented: true, message: message, alertKey: alertKey)
+    }
     
     func calculateResult(futureValue: String, periodInYears: String, principal: String) {
         guard let p = Double(principal),
               let f = Double(futureValue),
-              let t = Double(periodInYears) else { return }
+              let t = Double(periodInYears)
+        else {
+            showMessage(alertKey: "Invalid input!", message: "Please enter valid numbers.")
+            return
+        }
         
         interestRateAnswer = calculationService.getSimpleInterestRate(periodInYears: t, principal: p, futureValue: f)
     }
