@@ -16,6 +16,9 @@ struct CustomNumberField: View {
         LabeledContent{
             TextField(placeholder, text: $text)
                 .keyboardType(.decimalPad)
+                .onChange(of: text) { oldValue, newValue in
+                    text = newValue.filter({"0123456789.".contains($0)})
+                }
         } label: {
             Text("\(placeholder):").font(.subheadline)
         }

@@ -17,7 +17,6 @@ struct LoansAndSavingsView: View {
             Form {
                 Section(header: Text("What do you need to calculate?")) {
                     ResultSelectionChips(selectedValue: expectedResult)
-//                        .listRowBackground(Color.clear)
                 }
                 switch(expectedResult.selectedResultType) {
                 case .simple:
