@@ -48,23 +48,11 @@ struct SimpleInterestView: View {
                 }
                 .padding()
                 
-//                if (canResetForm) {
-//                    Button(action: resetForm) {
-//                        HStack(spacing: 10) {
-//                            Image(systemName: "arrow.counterclockwise")
-//                            Text("Reset")
-//                        }
-//                        .font(.headline)
-//                        .foregroundColor(.black)
-//                        .padding(.horizontal)
-//                        .padding(.vertical, 8)
-//                        .background(Color(.systemGray5))
-//                        .clipShape(Capsule())
-//                    }
-//                }
-                
-                SimpleInterestResultCard(result: result)
+                if (canResetForm) {
+                    ResetButton(action: resetForm)
+                }
             }
+            .buttonStyle(BorderlessButtonStyle())
 //            .toolbar {
 //                ToolbarItemGroup(placement: .keyboard, content: {
 //                    Spacer()
@@ -74,7 +62,6 @@ struct SimpleInterestView: View {
 //                })
 //            }
         }
-        .listRowBackground(Color.clear)
     }
     
     private func resetForm() {

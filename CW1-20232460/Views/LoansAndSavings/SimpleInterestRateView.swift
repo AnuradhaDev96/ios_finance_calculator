@@ -20,6 +20,10 @@ struct SimpleInterestRateView: View {
         return principalAmount.isEmpty || futureValue.isEmpty || duration.isEmpty
     }
     
+    var canResetForm: Bool {
+        return !principalAmount.isEmpty || !futureValue.isEmpty || !duration.isEmpty
+    }
+    
     var body: some View {
         Section(header: Text("Variables for Simple Interest Rate")) {
             VStack{
@@ -41,9 +45,20 @@ struct SimpleInterestRateView: View {
                         .cornerRadius(10)
                 }
                 .padding()
-                SimpleInterestRateResultCard(result: result)
+                
+                if (canResetForm) {
+                    ResetButton(action: resetForm)
+                }
             }
+            .buttonStyle(BorderlessButtonStyle())
         }
+    }
+    
+    func resetForm() {
+        principalAmount = ""
+        futureValue = ""
+        duration = ""
+        result.resetModel()
     }
 }
 
@@ -52,7 +67,7 @@ struct SimpleInterestRateResultCard: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 2) {
-            Text("Simple Interest")
+            Text("Simple Interest Rate")
                 .font(.headline)
                 .foregroundColor(.primary)
 

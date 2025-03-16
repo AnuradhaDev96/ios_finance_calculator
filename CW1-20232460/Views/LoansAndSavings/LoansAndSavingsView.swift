@@ -25,6 +25,14 @@ struct LoansAndSavingsView: View {
                 case .simpleInterestRate:
                     SimpleInterestRateView(result: simpleInterestRateResult)
                 }
+                Section(header: Text("Answer")) {
+                    switch(expectedResult.selectedResultType) {
+                    case .simple:
+                        SimpleInterestResultCard(result: simpleInterestResult)
+                    case .simpleInterestRate:
+                        SimpleInterestRateResultCard(result: simpleInterestRateResult)
+                    }
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

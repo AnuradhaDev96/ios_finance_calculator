@@ -24,4 +24,8 @@ class SimpleInterestRateResultViewModel: ObservableObject {
         
         interestRateAnswer = calculationService.getSimpleInterestRate(periodInYears: t, principal: p, futureValue: f)
     }
+    
+    func resetModel() {
+        interestRateAnswer = 0
+    }
 }
