@@ -25,9 +25,7 @@ struct LoansAndSavingsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("What do you need to calculate?")) {
-                    ResultSelectionChips(selectedValue: expectedResult)
-                }
+                ResultSelectionChips(selectedValue: expectedResult)
                 switch(expectedResult.selectedResultType) {
                 case .simple:
                     SimpleInterestView(result: simpleInterestResult)
@@ -54,24 +52,29 @@ struct LoansAndSavingsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Loans and Savings")
-                        .font(.system(size: 18, weight: .bold))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
+                    VStack(spacing: 3) {
+                        Text("Loans and Savings")
+                            .font(.system(size: 18, weight: .bold))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                        Text("with Simple Interest")
+                            .font(.system(size: 14, weight: .regular))
+                            .foregroundColor(.gray)
+                    }
                 }
-//                ToolbarItemGroup(placement: .keyboard, content: {
-//                    Spacer()
-//                    Button("Done") {
-//                        hideKeyboard()
-//                    }.font(.headline)
-//                })
+                //                ToolbarItemGroup(placement: .keyboard, content: {
+                //                    Spacer()
+                //                    Button("Done") {
+                //                        hideKeyboard()
+                //                    }.font(.headline)
+                //                })
             }
         }
     }
 }
 
 enum ResultType: String, CaseIterable, Identifiable {
-    case simple = "Simple Interest"
+    case simple = "Simple Interest &\nFuture Value"
     case simpleInterestRate = "Simple Interest Rate"
     case investmentDuration = "Investment Duration"
     case initialInvestment = "Initial Investment\n(Principal Amount)"

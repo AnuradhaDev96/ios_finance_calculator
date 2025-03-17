@@ -25,7 +25,13 @@ struct SimpleInterestView: View {
     }
     
     var body: some View {
-        Section(header: Text("Variables for Simple Interest")) {
+        Section(header: Text("Variables for Simple Interest"),
+                footer: HStack {
+            Spacer()
+            Button(action: {}) {
+                Text("How this works?")
+            }
+        }) {
             VStack{
                 CustomNumberField(placeholder: "Principal Amount", text: $principalAmount)
                 CustomNumberField(placeholder: "Interest Rate", text: $interestRate, suffix: "%")
@@ -57,14 +63,14 @@ struct SimpleInterestView: View {
             message: {
                 Text(result.alertDetails.message)
             }
-//            .toolbar {
-//                ToolbarItemGroup(placement: .keyboard, content: {
-//                    Spacer()
-//                    Button("Done") {
-//                        hideKeyboard()
-//                    }.font(.headline)
-//                })
-//            }
+            //            .toolbar {
+            //                ToolbarItemGroup(placement: .keyboard, content: {
+            //                    Spacer()
+            //                    Button("Done") {
+            //                        hideKeyboard()
+            //                    }.font(.headline)
+            //                })
+            //            }
         }
     }
     
@@ -78,13 +84,13 @@ struct SimpleInterestView: View {
 
 struct SimpleInterestResultCard: View {
     @ObservedObject var result: SimpleInterestResultViewModel
-
+    
     var body: some View {
         VStack(alignment: .center, spacing: 2) {
             Text("Simple Interest")
                 .font(.headline)
                 .foregroundColor(.primary)
-
+            
             Text("Rs.\(String(format: "%.2f", result.interestAnswer))")
                 .font(.largeTitle)
                 .fontWeight(.bold)
