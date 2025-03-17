@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
     let gridItems = [GridItem(.adaptive(minimum: 150), spacing: 16), GridItem(.adaptive(minimum: 150), spacing: 16)]
     let gridTiles = [
-        TileItem(iconName: "dollarsign.arrow.circlepath", title: "Savings",subtitle: "with Compoundings", destination: {AnyView(LoansAndSavingsView())}),
+        TileItem(iconName: "dollarsign.arrow.circlepath", title: "Loans & Savings",subtitle: "with Monthly Compoundings", destination: {AnyView(LoansAndSavingsView())}),
         TileItem(iconName: "dollarsign.bank.building", title: "Loans & Savings",subtitle: "with Simple Interest", destination: {AnyView(LoansAndSavingsView())}),
         TileItem(iconName: "dollarsign.circle", title: "Mortgage", destination: {AnyView(MortgageView())}),
         TileItem(iconName: "questionmark.circle", title: "Help", destination: {AnyView(LoansAndSavingsView())}),
