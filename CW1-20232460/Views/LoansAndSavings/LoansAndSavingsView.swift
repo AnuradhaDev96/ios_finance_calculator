@@ -11,6 +11,7 @@ struct LoansAndSavingsView: View {
     @StateObject private var expectedResult: ResultSelectionViewModel = ResultSelectionViewModel()
     @StateObject private var simpleInterestResult: SimpleInterestResultViewModel = SimpleInterestResultViewModel(calculationService: CalculationService())
     @StateObject private var simpleInterestRateResult: SimpleInterestRateResultViewModel = SimpleInterestRateResultViewModel(calculationService: CalculationService())
+    @StateObject private var investmentDurationResult = SimpleInterestInvestmentDurationResultViewModel(calculationService: CalculationService())
     
     var body: some View {
         NavigationStack {
@@ -23,6 +24,8 @@ struct LoansAndSavingsView: View {
                     SimpleInterestView(result: simpleInterestResult)
                 case .simpleInterestRate:
                     SimpleInterestRateView(result: simpleInterestRateResult)
+                case .investmentDuration:
+                    InvestmentDurationView(result: investmentDurationResult)
                 }
                 Section(header: Text("Answer")) {
                     switch(expectedResult.selectedResultType) {
@@ -30,6 +33,8 @@ struct LoansAndSavingsView: View {
                         SimpleInterestResultCard(result: simpleInterestResult)
                     case .simpleInterestRate:
                         SimpleInterestRateResultCard(result: simpleInterestRateResult)
+                    case .investmentDuration:
+                        InvestmentDurationResultCard(result: investmentDurationResult)
                     }
                 }
             }
@@ -55,6 +60,7 @@ struct LoansAndSavingsView: View {
 enum ResultType: String, CaseIterable, Identifiable {
     case simple = "Simple Interest"
     case simpleInterestRate = "Simple Interest Rate"
+    case investmentDuration = "Investment Duration"
     
     var id: String {self.rawValue}
 }

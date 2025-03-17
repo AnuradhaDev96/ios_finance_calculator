@@ -21,4 +21,11 @@ class CalculationService: ICalculationService {
     func getSimpleInterestFutureValue(annualInterest: Double, periodInYears: Double, principal: Double) -> Double {
         return principal * (1 + annualInterest/100 * periodInYears)
     }
+    
+    func getInvestmentDuration(futureValue: Double, principal: Double, interestRate: Double) -> Double {
+        let upper = futureValue - principal
+        let lower = principal * interestRate/100
+        
+        return upper/lower
+    }
 }
