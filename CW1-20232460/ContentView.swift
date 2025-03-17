@@ -11,8 +11,8 @@ import CoreData
 struct ContentView: View {
     let gridItems = [GridItem(.adaptive(minimum: 150), spacing: 16), GridItem(.adaptive(minimum: 150), spacing: 16)]
     let gridTiles = [
-        TileItem(iconName: "dollarsign.arrow.circlepath", title: "Interests", destination: {AnyView(LoansAndSavingsView())}),
-        TileItem(iconName: "dollarsign.bank.building", title: "Loans & Savings", destination: {AnyView(LoansAndSavingsView())}),
+        TileItem(iconName: "dollarsign.arrow.circlepath", title: "Savings",subtitle: "with Compoundings", destination: {AnyView(LoansAndSavingsView())}),
+        TileItem(iconName: "dollarsign.bank.building", title: "Loans & Savings",subtitle: "with Simple Interest", destination: {AnyView(LoansAndSavingsView())}),
         TileItem(iconName: "dollarsign.circle", title: "Mortgage", destination: {AnyView(MortgageView())}),
         TileItem(iconName: "questionmark.circle", title: "Help", destination: {AnyView(LoansAndSavingsView())}),
     ]
@@ -25,7 +25,7 @@ struct ContentView: View {
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                 
-                LazyVGrid(columns: gridItems, spacing: 16) {
+                LazyVGrid(columns: gridItems, spacing: 12) {
                     ForEach(gridTiles) { tile in
                         TileView(tile: tile)
                     }
@@ -35,13 +35,13 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, alignment: .top) // Align to start of the screen
             .padding(.top, 50)
         }
-        }
+    }
 }
 
 
 struct TileView: View {
     let tile: TileItem
-
+    
     var body: some View {
         NavigationLink(destination: tile.destination) {
             VStack {
@@ -52,8 +52,14 @@ struct TileView: View {
                     .foregroundColor(.blue)
                 Text(tile.title)
                     .font(.headline)
+                
+                if let subtitle = tile.subtitle {
+                    Text(subtitle)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
             }
-            .frame(width: 150, height: 100)
+            .frame(width: 180, height: 160)
             .background(Color.gray.opacity(0.2))
             .cornerRadius(10)
         }
@@ -68,11 +74,13 @@ struct TileItem : Identifiable {
     let id = UUID()
     let iconName: String
     let title: String
+    let subtitle: String?
     let destination: () -> AnyView
     
-    init(iconName: String, title: String, destination: @escaping () -> AnyView) {
+    init(iconName: String, title: String, subtitle: String? = nil, destination: @escaping () -> AnyView) {
         self.iconName = iconName
         self.title = title
         self.destination = destination
+        self.subtitle = subtitle
     }
 }
