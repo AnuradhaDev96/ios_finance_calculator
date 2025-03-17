@@ -12,13 +12,14 @@ struct LoansAndSavingsView: View {
     @StateObject private var simpleInterestResult: SimpleInterestResultViewModel
     @StateObject private var simpleInterestRateResult: SimpleInterestRateResultViewModel
     @StateObject private var investmentDurationResult: SimpleInterestInvestmentDurationResultViewModel
+    @StateObject private var initialInvestmentResult: SimpleInterestPrincipalResultViewModel
     
     init() {
         let calculationService: ICalculationService = CalculationService()
         _simpleInterestResult = StateObject(wrappedValue: SimpleInterestResultViewModel(calculationService: calculationService))
         _simpleInterestRateResult = StateObject(wrappedValue: SimpleInterestRateResultViewModel(calculationService: calculationService))
         _investmentDurationResult = StateObject(wrappedValue: SimpleInterestInvestmentDurationResultViewModel(calculationService: calculationService))
-                                               
+        _initialInvestmentResult = StateObject(wrappedValue: SimpleInterestPrincipalResultViewModel(calculationService: calculationService))
     }
     
     var body: some View {
@@ -34,6 +35,8 @@ struct LoansAndSavingsView: View {
                     SimpleInterestRateView(result: simpleInterestRateResult)
                 case .investmentDuration:
                     InvestmentDurationView(result: investmentDurationResult)
+                case .initialInvestment:
+                    InitialInvestmentView(result: initialInvestmentResult)
                 }
                 Section(header: Text("Answer")) {
                     switch(expectedResult.selectedResultType) {
@@ -43,6 +46,8 @@ struct LoansAndSavingsView: View {
                         SimpleInterestRateResultCard(result: simpleInterestRateResult)
                     case .investmentDuration:
                         InvestmentDurationResultCard(result: investmentDurationResult)
+                    case .initialInvestment:
+                        InitialInvestmentResultCard(result: initialInvestmentResult)
                     }
                 }
             }
@@ -69,6 +74,7 @@ enum ResultType: String, CaseIterable, Identifiable {
     case simple = "Simple Interest"
     case simpleInterestRate = "Simple Interest Rate"
     case investmentDuration = "Investment Duration"
+    case initialInvestment = "Initial Investment\n(Principal Amount)"
     
     var id: String {self.rawValue}
 }

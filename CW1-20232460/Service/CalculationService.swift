@@ -8,10 +8,6 @@
 import Foundation
 
 class CalculationService: ICalculationService {
-    func getInitialInvestment(futureValue: Double, periodInYears: Double, interestRate: Double) -> Double {
-        return 0
-    }
-    
     func getSimpleInterestRate(periodInYears: Double, principal: Double, futureValue: Double) -> Double {
         let upper = futureValue - principal
         let lower = principal * periodInYears
@@ -31,5 +27,9 @@ class CalculationService: ICalculationService {
         let lower = principal * interestRate/100
         
         return upper/lower
+    }
+    
+    func getInitialInvestment(futureValue: Double, periodInYears: Double, interestRate: Double) -> Double {
+        return futureValue / (1 + interestRate/100 * periodInYears)
     }
 }

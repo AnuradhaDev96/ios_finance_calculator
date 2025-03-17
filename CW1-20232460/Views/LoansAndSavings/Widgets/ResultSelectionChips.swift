@@ -16,6 +16,7 @@ struct ResultSelectionChips: View {
                 Text(type.rawValue)
                     .tint(selectedValue.selectedResultType == type ? Color.blue : Color.gray)
                     .controlSize(.large)
+                    .multilineTextAlignment(.leading)
                     .buttonStyle(BorderlessButtonStyle())
                     .tag(type)
             }
