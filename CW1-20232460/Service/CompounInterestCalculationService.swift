@@ -8,6 +8,10 @@
 import Foundation
 
 class CompounInterestCalculationService: ICompoundInterestCalculationService {
+    func getNoOfCompoundingsOvertime(compoundingsPerYear: Double, durationInYears: Double) -> Double {
+        return compoundingsPerYear * durationInYears
+    }
+    
     func getPeriodInterest(nominamAnnualInterest: Double, noOfCompoundingPeriods: Double) -> Double {
         return nominamAnnualInterest / noOfCompoundingPeriods
     }

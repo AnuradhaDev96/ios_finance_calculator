@@ -9,20 +9,22 @@ import SwiftUI
 
 struct CompundInitialInvestmentView: View {
     @State private var nominalInterestRate: String = ""
-    //    @State var isPeriodicInterestRateKnown = true
+    @State var durationInYears: String = ""
     @State private var selectedCompundingPeriodType: CompoundingPeriodType = .monthly
     @State private var compoundingPeriodPerYear: String = "\(CompoundingPeriodType.monthly.compoundingPeriodPerYear)"
     
     @StateObject private var periodicInterestRateResult: PeriodicInterestResultViewModel
+    @StateObject private var totalCompoundingsOvertimeResult: TotalCompoundingsOvertimeResultViewModel
     
     init() {
         let calculationService: ICompoundInterestCalculationService = CompounInterestCalculationService()
         _periodicInterestRateResult = StateObject(wrappedValue: PeriodicInterestResultViewModel(calculationService: calculationService))
+        _totalCompoundingsOvertimeResult = StateObject(wrappedValue: TotalCompoundingsOvertimeResultViewModel(calculationService: calculationService))
     }
     
     var body: some View {
         Form() {
-            Section(header: Text("Compounding Information")) {
+            Section(header: Text("Compounding Details")) {
                 // m
                 Picker("No. of Compounding Periods Per Year:", selection: $selectedCompundingPeriodType) {
                     ForEach(CompoundingPeriodType.allCases) { type in
@@ -38,12 +40,14 @@ struct CompundInitialInvestmentView: View {
                 .onChange(of: selectedCompundingPeriodType) { oldValue, newValue in
                     compoundingPeriodPerYear = "\(newValue.compoundingPeriodPerYear)"
                     periodicInterestRateResult.calculatePeriodicInterestRate(nominamAnnualInterestRate: nominalInterestRate, noOfCompoundingPeriods: compoundingPeriodPerYear)
+                    totalCompoundingsOvertimeResult.calculateCompoundingsOvertime(compoundingsPerYear: compoundingPeriodPerYear, durationInYears: durationInYears)
                 }
                 
                 if (selectedCompundingPeriodType == CompoundingPeriodType.custom) {
                     CustomNumberField(placeholder: "Enter your value", text: $compoundingPeriodPerYear)
                         .onChange(of: compoundingPeriodPerYear) { oldValue, newValue in
                             periodicInterestRateResult.calculatePeriodicInterestRate(nominamAnnualInterestRate: nominalInterestRate, noOfCompoundingPeriods: newValue)
+                            totalCompoundingsOvertimeResult.calculateCompoundingsOvertime(compoundingsPerYear: newValue, durationInYears: durationInYears)
                         }
                 } else {
                     LabeledContent{
@@ -52,8 +56,6 @@ struct CompundInitialInvestmentView: View {
                         Text("Selected value:").font(.subheadline)
                     }
                 }
-                // i
-                //                Toggle("Do you know Periodic interest rate?", isOn: $isPeriodicInterestRateKnown).padding(.top, 10)
             }
             
             Section(header: Text("Interest Rate")) {
@@ -67,6 +69,19 @@ struct CompundInitialInvestmentView: View {
                     Text("\(String(format: "%.2f", periodicInterestRateResult.periodicInterestRate))%")
                 } label: {
                     Text("Periodic interest rate:").font(.subheadline)
+                }
+            }
+            
+            Section(header: Text("Duration of Loan/Saving")) {
+                // t
+                GuidedNumberField(placeholder: "Duration", text: $durationInYears, suffix: "years")
+                    .onChange(of: durationInYears) { oldValue, newValue in
+                        totalCompoundingsOvertimeResult.calculateCompoundingsOvertime(compoundingsPerYear: compoundingPeriodPerYear, durationInYears: newValue)
+                    }
+                LabeledContent {
+                    Text("\(String(format: "%.2f", totalCompoundingsOvertimeResult.noOfCompoundingsOvertime))")
+                } label: {
+                    Text("Total Compounding Periods:").font(.subheadline)
                 }
             }
         }
