@@ -1,5 +1,5 @@
 //
-//  PeriodicInterestResultViewModel.swift
+//  CompoundInterestPresentValueResultViewModel.swift
 //  CW1-20232460
 //
 //  Created by Anuradha Hewa Siribaddana on 2025-03-18.
@@ -7,34 +7,31 @@
 
 import Foundation
 
-class PeriodicInterestResultViewModel: ObservableObject {
+class CompoundInterestPresentValueResultViewModel: ObservableObject {
     private let calculationService: ICompoundInterestCalculationService
     
     init(calculationService: ICompoundInterestCalculationService) {
         self.calculationService = calculationService
     }
     
-    @Published var periodicInterestRate: Double = 0
+    @Published var presentValueAnswer: Double = 0
     @Published var alertDetails = AlertDetails()
     
     private func showMessage(alertKey: String, message: String) {
         alertDetails = AlertDetails(isPresented: true, message: message, alertKey: alertKey)
     }
     
-    func calculatePeriodicInterestRate(nominamAnnualInterestRate: String, noOfCompoundingPeriods: String) {
-        guard let j = Double(nominamAnnualInterestRate),
-              let m = Double(noOfCompoundingPeriods)
+    func calculateResult(futureValue: String, periodicInterestRate: Double, totalCompoundingPeriods: Double) {
+        guard let fv = Double(futureValue)
         else {
             showMessage(alertKey: "Invalid input!", message: "Please enter valid numbers.")
             return
         }
         
-        let i = calculationService.getPeriodInterest(nominamAnnualInterest: j, noOfCompoundingPeriods: m)
-        
-        periodicInterestRate = i.isInfinite ? 0 : i
+        presentValueAnswer = calculationService.getPresentValue(futureValue: fv, periodicInterestRate: periodicInterestRate, totalCompoundingPeriods: totalCompoundingPeriods)
     }
     
     func resetModel() {
-        periodicInterestRate = 0
+        presentValueAnswer = 0
     }
 }

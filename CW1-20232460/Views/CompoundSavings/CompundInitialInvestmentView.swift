@@ -10,16 +10,27 @@ import SwiftUI
 struct CompundInitialInvestmentView: View {
     @State private var nominalInterestRate: String = ""
     @State var durationInYears: String = ""
+    @State var futureValue: String = ""
     @State private var selectedCompundingPeriodType: CompoundingPeriodType = .monthly
     @State private var compoundingPeriodPerYear: String = "\(CompoundingPeriodType.monthly.compoundingPeriodPerYear)"
     
     @StateObject private var periodicInterestRateResult: PeriodicInterestResultViewModel
     @StateObject private var totalCompoundingsOvertimeResult: TotalCompoundingsOvertimeResultViewModel
+    @StateObject private var result: CompoundInterestPresentValueResultViewModel
     
     init() {
         let calculationService: ICompoundInterestCalculationService = CompounInterestCalculationService()
         _periodicInterestRateResult = StateObject(wrappedValue: PeriodicInterestResultViewModel(calculationService: calculationService))
         _totalCompoundingsOvertimeResult = StateObject(wrappedValue: TotalCompoundingsOvertimeResultViewModel(calculationService: calculationService))
+        _result = StateObject(wrappedValue: CompoundInterestPresentValueResultViewModel(calculationService: calculationService))
+    }
+    
+    var isFormInvalid: Bool {
+        return nominalInterestRate.isEmpty || durationInYears.isEmpty || futureValue.isEmpty || compoundingPeriodPerYear.isEmpty
+    }
+    
+    var canResetForm: Bool {
+        return !nominalInterestRate.isEmpty || !durationInYears.isEmpty || !futureValue.isEmpty
     }
     
     var body: some View {
@@ -84,7 +95,74 @@ struct CompundInitialInvestmentView: View {
                     Text("Total Compounding Periods:").font(.subheadline)
                 }
             }
+            
+            Section(header: Text("Investment Details")) {
+                CustomNumberField(placeholder: "Future Value", text: $futureValue)
+            }
+            
+            VStack {
+                Button(action: {
+                    hideKeyboard()
+                    result.calculateResult(futureValue: futureValue, periodicInterestRate: periodicInterestRateResult.periodicInterestRate, totalCompoundingPeriods: totalCompoundingsOvertimeResult.noOfCompoundingsOvertime)
+                }) {
+                    Text("Calculate")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .disabled(isFormInvalid)
+                        .background(isFormInvalid ? Color.gray.opacity(0.7) : Color.blue)
+                        .cornerRadius(10)
+                }
+                .padding()
+                
+                if (canResetForm) {
+                    ResetButton(action: resetForm)
+                }
+            }
+            .buttonStyle(BorderlessButtonStyle())
+            .listRowBackground(Color.clear)
+            
+            CompoundInitialValueResultCard(result: result)
         }
+        .alert(result.alertDetails.alertKey, isPresented: $result.alertDetails.isPresented) {}
+        message: {
+            Text(result.alertDetails.message)
+        }
+    }
+    
+    private func resetForm() {
+        // State properties
+        nominalInterestRate = ""
+        durationInYears = ""
+        futureValue = ""
+        selectedCompundingPeriodType = CompoundingPeriodType.monthly
+        compoundingPeriodPerYear = "\(CompoundingPeriodType.monthly.compoundingPeriodPerYear)"
+        
+        // View models
+        periodicInterestRateResult.resetModel()
+        totalCompoundingsOvertimeResult.resetModel()
+        result.resetModel()
+    }
+}
+
+struct CompoundInitialValueResultCard: View {
+    @ObservedObject var result: CompoundInterestPresentValueResultViewModel
+
+    var body: some View {
+        VStack(alignment: .center, spacing: 2) {
+            Text("Present Value")
+                .font(.headline)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.primary)
+
+            Text("Rs.\(String(format: "%.2f", result.presentValueAnswer))")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.blue)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
     }
 }
 

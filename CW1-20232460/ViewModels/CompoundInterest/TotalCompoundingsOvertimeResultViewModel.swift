@@ -31,4 +31,8 @@ class TotalCompoundingsOvertimeResultViewModel: ObservableObject {
         
         noOfCompoundingsOvertime = calculationService.getNoOfCompoundingsOvertime(compoundingsPerYear: m, durationInYears: t)
     }
+    
+    func resetModel() {
+        noOfCompoundingsOvertime = 0
+    }
 }
