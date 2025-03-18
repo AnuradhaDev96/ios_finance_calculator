@@ -29,6 +29,8 @@ class PeriodicInterestResultViewModel: ObservableObject {
             return
         }
         
-        periodicInterestRate = calculationService.getPeriodInterest(nominamAnnualInterest: j, noOfCompoundingPeriods: m)
+        let i = calculationService.getPeriodInterest(nominamAnnualInterest: j, noOfCompoundingPeriods: m)
+        
+        periodicInterestRate = i.isInfinite ? 0 : i
     }
 }

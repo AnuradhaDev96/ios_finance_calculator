@@ -37,14 +37,14 @@ struct CompundInitialInvestmentView: View {
                 .pickerStyle(.menu)
                 .onChange(of: selectedCompundingPeriodType) { oldValue, newValue in
                     compoundingPeriodPerYear = "\(newValue.compoundingPeriodPerYear)"
-//                    periodicInterestRateResult.calculatePeriodicInterestRate(nominamAnnualInterestRate: nominalInterestRate, noOfCompoundingPeriods: compoundingPeriodPerYear)
+                    periodicInterestRateResult.calculatePeriodicInterestRate(nominamAnnualInterestRate: nominalInterestRate, noOfCompoundingPeriods: compoundingPeriodPerYear)
                 }
                 
                 if (selectedCompundingPeriodType == CompoundingPeriodType.custom) {
                     CustomNumberField(placeholder: "Enter your value", text: $compoundingPeriodPerYear)
-//                        .onChange(of: compoundingPeriodPerYear) { oldValue, newValue in
-//                            periodicInterestRateResult.calculatePeriodicInterestRate(nominamAnnualInterestRate: nominalInterestRate, noOfCompoundingPeriods: newValue)
-//                        }
+                        .onChange(of: compoundingPeriodPerYear) { oldValue, newValue in
+                            periodicInterestRateResult.calculatePeriodicInterestRate(nominamAnnualInterestRate: nominalInterestRate, noOfCompoundingPeriods: newValue)
+                        }
                 } else {
                     LabeledContent{
                         Text("\(compoundingPeriodPerYear)")
@@ -59,9 +59,9 @@ struct CompundInitialInvestmentView: View {
             Section(header: Text("Interest Rate")) {
                 // j
                 GuidedNumberField(placeholder: "Nominal Annual Interest Rate", text: $nominalInterestRate, suffix: "%")
-//                    .onChange(of: nominalInterestRate) { oldValue, newValue in
-//                        periodicInterestRateResult.calculatePeriodicInterestRate(nominamAnnualInterestRate: newValue, noOfCompoundingPeriods: newValue)
-//                    }
+                    .onChange(of: nominalInterestRate) { oldValue, newValue in
+                        periodicInterestRateResult.calculatePeriodicInterestRate(nominamAnnualInterestRate: newValue, noOfCompoundingPeriods: compoundingPeriodPerYear)
+                    }
                 
                 LabeledContent {
                     Text("\(String(format: "%.2f", periodicInterestRateResult.periodicInterestRate))%")

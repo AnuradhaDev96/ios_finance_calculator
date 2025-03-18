@@ -20,30 +20,30 @@ struct CompoundSavingsView: View {
                         Spacer()
                     }.padding(.leading).padding(.top, -8)
                     TabView(selection: $selectedSideMenuTab) {
-                        HomeView(presentSideMenu: $presentSideMenu)
+                        HomeView()
                             .tabItem {
                                 Image(systemName: SideMenuRowType.interestRate.props.iconName)
                                 Text(SideMenuRowType.interestRate.props.tabName)
                             }
-                            .tag(SideMenuRowType.interestRate.rawValue)
-                        HomeView(presentSideMenu: $presentSideMenu)
+                            .tag(SideMenuRowType.interestRate)
+                        HomeView()
                             .tabItem {
                                 Image(systemName: SideMenuRowType.futureValue.props.iconName)
                                 Text(SideMenuRowType.futureValue.props.tabName)
                             }
-                            .tag(SideMenuRowType.futureValue.rawValue)
+                            .tag(SideMenuRowType.futureValue)
                         CompundInitialInvestmentView()
                             .tabItem {
                                 Image(systemName: SideMenuRowType.initialInvestment.props.iconName)
                                 Text(SideMenuRowType.initialInvestment.props.tabName)
                             }
-                            .tag(SideMenuRowType.initialInvestment.rawValue)
-                        HomeView(presentSideMenu: $presentSideMenu)
+                            .tag(SideMenuRowType.initialInvestment)
+                        HomeView()
                             .tabItem {
                                 Image(systemName: SideMenuRowType.contribution.props.iconName)
                                 Text(SideMenuRowType.contribution.props.tabName)
                             }
-                            .tag(SideMenuRowType.contribution.rawValue)
+                            .tag(SideMenuRowType.contribution)
                     }
                     .navigationTitle("Loans & Savings")
                     .navigationBarTitleDisplayMode(.large)
@@ -73,8 +73,6 @@ struct CompoundSavingsView: View {
 }
 
 struct HomeView: View {
-    
-    @Binding var presentSideMenu: Bool
     
     var body: some View {
         VStack{
@@ -182,7 +180,7 @@ struct DrawerContent: View {
     }
 }
 
-enum SideMenuRowType: Int, CaseIterable{
+enum SideMenuRowType: Int, CaseIterable, Identifiable {
     case interestRate = 0
     case futureValue
     case initialInvestment
@@ -200,6 +198,8 @@ enum SideMenuRowType: Int, CaseIterable{
             return ("Find monthly contribution", "infinity.circle", "Contriobutions")
         }
     }
+    
+    var id: Int {self.rawValue}
 }
 #Preview {
     CompoundSavingsView()
