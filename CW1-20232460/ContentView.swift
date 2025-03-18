@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
     let gridItems = [GridItem(.adaptive(minimum: 150), spacing: 16), GridItem(.adaptive(minimum: 150), spacing: 16)]
     let gridTiles = [
-        TileItem(iconName: "dollarsign.arrow.circlepath", title: "Loans & Savings",subtitle: "with Monthly Compoundings", destination: {AnyView(LoansAndSavingsView())}),
+        TileItem(iconName: "dollarsign.arrow.circlepath", title: "Loans & Savings",subtitle: "with Monthly Compoundings", destination: {AnyView(CompoundSavingsView())}),
         TileItem(iconName: "dollarsign.bank.building", title: "Loans & Savings",subtitle: "with Simple Interest", destination: {AnyView(LoansAndSavingsView())}),
         TileItem(iconName: "dollarsign.circle", title: "Mortgage", destination: {AnyView(MortgageView())}),
         TileItem(iconName: "questionmark.circle", title: "Help", destination: {AnyView(LoansAndSavingsView())}),
@@ -19,11 +19,11 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(alignment: .center, spacing: 20) {
-                Text("Financial Calculator")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
+            VStack(alignment: .leading, spacing: 20) {
+//                Text("Financial Calculator")
+//                    .font(.largeTitle)
+//                    .fontWeight(.bold)
+//                    .multilineTextAlignment(.center)
                 
                 LazyVGrid(columns: gridItems, spacing: 12) {
                     ForEach(gridTiles) { tile in
@@ -32,6 +32,7 @@ struct ContentView: View {
                 }
                 .padding()
             }
+            .navigationTitle("Financial Calculator")
             .frame(maxWidth: .infinity, alignment: .top) // Align to start of the screen
             .padding(.top, 50)
         }
