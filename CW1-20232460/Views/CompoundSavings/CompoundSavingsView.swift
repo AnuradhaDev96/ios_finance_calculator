@@ -26,7 +26,7 @@ struct CompoundSavingsView: View {
                                 Text(SideMenuRowType.interestRate.props.tabName)
                             }
                             .tag(SideMenuRowType.interestRate)
-                        HomeView()
+                        CompoundFutureValueView()
                             .tabItem {
                                 Image(systemName: SideMenuRowType.futureValue.props.iconName)
                                 Text(SideMenuRowType.futureValue.props.tabName)

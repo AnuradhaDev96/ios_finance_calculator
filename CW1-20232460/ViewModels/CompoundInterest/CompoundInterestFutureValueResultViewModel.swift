@@ -21,16 +21,14 @@ class CompoundInterestFutureValueResultViewModel: ObservableObject {
         alertDetails = AlertDetails(isPresented: true, message: message, alertKey: alertKey)
     }
     
-    func calculateResult(presentValue: String, periodicInterestRate: String, totalCompoundingPeriods: String) {
-        guard let pv = Double(presentValue),
-              let i = Double(periodicInterestRate),
-              let n = Double(totalCompoundingPeriods)
+    func calculateResult(presentValue: String, periodicInterestRate: Double, totalCompoundingPeriods: Double) {
+        guard let pv = Double(presentValue)
         else {
             showMessage(alertKey: "Invalid input!", message: "Please enter valid numbers.")
             return
         }
         
-        futureValueAnswer = calculationService.getFutureValue(presentValue: pv, periodicInterestRate: i, totalCompoundingPeriods: n)
+        futureValueAnswer = calculationService.getFutureValue(presentValue: pv, periodicInterestRate: periodicInterestRate, totalCompoundingPeriods: totalCompoundingPeriods)
     }
     
     func resetModel() {
