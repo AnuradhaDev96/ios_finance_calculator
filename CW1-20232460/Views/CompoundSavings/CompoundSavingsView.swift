@@ -9,36 +9,58 @@ import SwiftUI
 
 struct CompoundSavingsView: View {
     @State var presentSideMenu = false
-    @State var selectedSideMenuTab:SideMenuRowType = .home
+    @State var selectedSideMenuTab:SideMenuRowType = .interestRate
     
     var body: some View {
         ZStack{
             if (!presentSideMenu) {
-                TabView(selection: $selectedSideMenuTab) {
-                    HomeView(presentSideMenu: $presentSideMenu)
-                        .tag(0)
-                    HomeView(presentSideMenu: $presentSideMenu)
-                        .tag(1)
-                    HomeView(presentSideMenu: $presentSideMenu)
-                        .tag(2)
-                    HomeView(presentSideMenu: $presentSideMenu)
-                        .tag(3)
-                }
-                .navigationTitle("Compoundings")
-                .navigationBarTitleDisplayMode(.large)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) { // Right-side icon
-                        Button{
-                            presentSideMenu.toggle()
-                        } label: {
-                            HStack {
-                                Text("Switch Result")
-                                    .font(.subheadline)
-                                Image(systemName: "square.stack.3d.forward.dottedline.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 32, height: 32)
-                                    .foregroundColor(.blue)
+                VStack {
+                    HStack{
+                        Text("With Compounds").font(.title3).foregroundColor(.gray)
+                        Spacer()
+                    }.padding(.leading).padding(.top, -8)
+                    TabView(selection: $selectedSideMenuTab) {
+                        HomeView(presentSideMenu: $presentSideMenu)
+                            .tabItem {
+                                Image(systemName: SideMenuRowType.interestRate.props.iconName)
+                                Text(SideMenuRowType.interestRate.props.tabName)
+                            }
+                            .tag(SideMenuRowType.interestRate.rawValue)
+                        HomeView(presentSideMenu: $presentSideMenu)
+                            .tabItem {
+                                Image(systemName: SideMenuRowType.futureValue.props.iconName)
+                                Text(SideMenuRowType.futureValue.props.tabName)
+                            }
+                            .tag(SideMenuRowType.futureValue.rawValue)
+                        HomeView(presentSideMenu: $presentSideMenu)
+                            .tabItem {
+                                Image(systemName: SideMenuRowType.initialInvestment.props.iconName)
+                                Text(SideMenuRowType.initialInvestment.props.tabName)
+                            }
+                            .tag(SideMenuRowType.initialInvestment.rawValue)
+                        HomeView(presentSideMenu: $presentSideMenu)
+                            .tabItem {
+                                Image(systemName: SideMenuRowType.contribution.props.iconName)
+                                Text(SideMenuRowType.contribution.props.tabName)
+                            }
+                            .tag(SideMenuRowType.contribution.rawValue)
+                    }
+                    .navigationTitle("Loans & Savings")
+                    .navigationBarTitleDisplayMode(.large)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button{
+                                presentSideMenu.toggle()
+                            } label: {
+                                HStack {
+                                    Text("Switch Result")
+                                        .font(.caption)
+                                    Image(systemName: "square.stack.3d.forward.dottedline.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 25, height: 25)
+                                        .foregroundColor(.blue)
+                                }
                             }
                         }
                     }
@@ -139,7 +161,7 @@ struct DrawerContent: View {
                         .frame(width: 5)
                     
                     ZStack{
-                        Image(imageName)
+                        Image(systemName: imageName)
                             .resizable()
                             .renderingMode(.template)
                             .foregroundColor(isSelected ? .black : .gray)
@@ -161,21 +183,21 @@ struct DrawerContent: View {
 }
 
 enum SideMenuRowType: Int, CaseIterable{
-    case home = 0
-    case favorite
-    case chat
-    case profile
+    case interestRate = 0
+    case futureValue
+    case initialInvestment
+    case contribution
     
-    var props: (title: String, iconName: String){
+    var props: (title: String, iconName: String, tabName: String){
         switch self {
-        case .home:
-            return ("Find interest rate", "home")
-        case .favorite:
-            return ("Find future value", "favorite")
-        case .chat:
-            return ("Find initial investment", "chat")
-        case .profile:
-            return ("Find monthly contribution", "profile")
+        case .interestRate:
+            return ("Find interest rate", "percent", "Rate")
+        case .futureValue:
+            return ("Find future value", "hands.sparkles", "Future Value")
+        case .initialInvestment:
+            return ("Find initial investment", "door.left.hand.open", "Initial Value")
+        case .contribution:
+            return ("Find monthly contribution", "infinity.circle", "Contriobutions")
         }
     }
 }
