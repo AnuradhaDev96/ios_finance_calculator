@@ -32,7 +32,7 @@ struct CompoundSavingsView: View {
                                 Text(SideMenuRowType.futureValue.props.tabName)
                             }
                             .tag(SideMenuRowType.futureValue.rawValue)
-                        HomeView(presentSideMenu: $presentSideMenu)
+                        CompundInitialInvestmentView()
                             .tabItem {
                                 Image(systemName: SideMenuRowType.initialInvestment.props.iconName)
                                 Text(SideMenuRowType.initialInvestment.props.tabName)
