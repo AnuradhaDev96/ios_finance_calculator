@@ -13,38 +13,39 @@ struct CompoundSavingsView: View {
     
     var body: some View {
         ZStack{
-            
-            TabView(selection: $selectedSideMenuTab) {
-                HomeView(presentSideMenu: $presentSideMenu)
-                    .tag(0)
-                HomeView(presentSideMenu: $presentSideMenu)
-                    .tag(1)
-                HomeView(presentSideMenu: $presentSideMenu)
-                    .tag(2)
-                HomeView(presentSideMenu: $presentSideMenu)
-                    .tag(3)
-            }
-            
-            SideMenu(isShowing: $presentSideMenu, content: AnyView(SideMenuView(selectedSideMenuTab: $selectedSideMenuTab, presentSideMenu: $presentSideMenu)))
-        }
-        .navigationTitle("Compoundings")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) { // Right-side icon
-                Button{
-                    presentSideMenu.toggle()
-                } label: {
-                    HStack {
-                        Text("Switch Result")
-                            .font(.subheadline)
-                        Image(systemName: "square.stack.3d.forward.dottedline.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 32, height: 32)
-                            .foregroundColor(.blue)
+            if (!presentSideMenu) {
+                TabView(selection: $selectedSideMenuTab) {
+                    HomeView(presentSideMenu: $presentSideMenu)
+                        .tag(0)
+                    HomeView(presentSideMenu: $presentSideMenu)
+                        .tag(1)
+                    HomeView(presentSideMenu: $presentSideMenu)
+                        .tag(2)
+                    HomeView(presentSideMenu: $presentSideMenu)
+                        .tag(3)
+                }
+                .navigationTitle("Compoundings")
+                .navigationBarTitleDisplayMode(.large)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) { // Right-side icon
+                        Button{
+                            presentSideMenu.toggle()
+                        } label: {
+                            HStack {
+                                Text("Switch Result")
+                                    .font(.subheadline)
+                                Image(systemName: "square.stack.3d.forward.dottedline.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(.blue)
+                            }
+                        }
                     }
                 }
             }
+            
+            SideDrawer(isShowing: $presentSideMenu, content: AnyView(DrawerContent(selectedSideMenuTab: $selectedSideMenuTab, presentSideMenu: $presentSideMenu)))
         }
     }
 }
@@ -55,25 +56,6 @@ struct HomeView: View {
     
     var body: some View {
         VStack{
-//            HStack(){
-//                Spacer()
-//                Button{
-//                    presentSideMenu.toggle()
-//                } label: {
-//                    HStack {
-//                        Text("Switch Result")
-//                            .font(.subheadline)
-//                        Image(systemName: "square.stack.3d.forward.dottedline.fill")
-//                            .resizable()
-//                            .scaledToFit()
-//                            .frame(width: 32, height: 32)
-//                            .foregroundColor(.blue)
-//                    }
-//                }
-//            }
-            //            .padding()
-            
-//            Spacer()
             Text("Home View")
             Spacer()
         }
@@ -81,10 +63,11 @@ struct HomeView: View {
     }
 }
 
-struct SideMenu: View {
+struct SideDrawer: View {
     @Binding var isShowing: Bool
     var content: AnyView
     var edgeTransition: AnyTransition = .move(edge: .leading)
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             if (isShowing) {
@@ -107,20 +90,23 @@ struct SideMenu: View {
     }
 }
 
-struct SideMenuView: View {
+struct DrawerContent: View {
     
     @Binding var selectedSideMenuTab: SideMenuRowType
     @Binding var presentSideMenu: Bool
+    
+    private let width = UIScreen.main.bounds.width - 100
     
     var body: some View {
         HStack {
             ZStack{
                 Rectangle()
                     .fill(.white)
-                    .frame(width: 270)
+                    .frame(width: width)
                     .shadow(color: .purple.opacity(0.1), radius: 5, x: 0, y: 3)
                 
                 VStack(alignment: .leading, spacing: 0) {
+                    Spacer()
                     ForEach(SideMenuRowType.allCases, id: \.self){ row in
                         RowView(isSelected: selectedSideMenuTab == row, imageName: row.props.iconName, title: row.props.title) {
                             selectedSideMenuTab = row
@@ -131,7 +117,7 @@ struct SideMenuView: View {
                     Spacer()
                 }
                 .padding(.top, 100)
-                .frame(width: 270)
+                .frame(width: width)
                 .background(
                     Color.white
                 )
