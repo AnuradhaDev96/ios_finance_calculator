@@ -15,10 +15,10 @@ struct CompoundSavingsView: View {
         ZStack{
             if (!presentSideMenu) {
                 VStack {
-                    HStack{
-                        Text("With Compounds").font(.title3).foregroundColor(.gray)
+                    HStack {
+                        Text(selectedSideMenuTab.props.title).font(.headline).foregroundColor(.gray).padding()
                         Spacer()
-                    }.padding(.leading).padding(.top, -8)
+                    }
                     TabView(selection: $selectedSideMenuTab) {
                         HomeView()
                             .tabItem {
@@ -45,20 +45,22 @@ struct CompoundSavingsView: View {
                             }
                             .tag(SideMenuRowType.contribution)
                     }
-                    .navigationTitle("Loans & Savings")
-                    .navigationBarTitleDisplayMode(.large)
+                    .navigationTitle("Compound Interest")
+                    .navigationBarTitleDisplayMode(.inline)
+//                    .toolbarBackground(.bar, for: .navigationBar)
+                    .toolbarBackground(Color.white, for: .navigationBar)
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button{
                                 presentSideMenu.toggle()
                             } label: {
-                                HStack {
-                                    Text("Switch Result")
+                                HStack(spacing: 2) {
+                                    Text("Toggle")
                                         .font(.caption)
                                     Image(systemName: "square.stack.3d.forward.dottedline.fill")
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 25, height: 25)
+                                        .frame(width: 22, height: 22)
                                         .foregroundColor(.blue)
                                 }
                             }
@@ -126,7 +128,8 @@ struct DrawerContent: View {
                     .shadow(color: .purple.opacity(0.1), radius: 5, x: 0, y: 3)
                 
                 VStack(alignment: .leading, spacing: 0) {
-                    Spacer()
+//                    Spacer()
+                    Text("Toggle Outcome (Result)").font(.title).bold().padding()
                     ForEach(SideMenuRowType.allCases, id: \.self){ row in
                         RowView(isSelected: selectedSideMenuTab == row, imageName: row.props.iconName, title: row.props.title) {
                             selectedSideMenuTab = row
@@ -195,7 +198,7 @@ enum SideMenuRowType: Int, CaseIterable, Identifiable {
         case .initialInvestment:
             return ("Find initial investment", "door.left.hand.open", "Initial Value")
         case .contribution:
-            return ("Find monthly contribution", "infinity.circle", "Contriobutions")
+            return ("Find no. of contributions", "infinity.circle", "Contriobutions")
         }
     }
     
