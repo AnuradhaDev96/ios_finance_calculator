@@ -14,7 +14,7 @@ struct ContentView: View {
         TileItem(iconName: "dollarsign.arrow.circlepath", title: "Loans & Savings",subtitle: "with Compound Interest", destination: {AnyView(CompoundSavingsView())}),
         TileItem(iconName: "dollarsign.bank.building", title: "Loans & Savings",subtitle: "with Simple Interest", destination: {AnyView(LoansAndSavingsView())}),
         TileItem(iconName: "dollarsign.circle", title: "Mortgage", destination: {AnyView(MortgageView())}),
-        TileItem(iconName: "rectangle.stack.badge.play", title: "Due Payments", subtitle: "Payments for loans done at BEGINNING of payment period", destination: {AnyView(MortgageView())}),
+        TileItem(iconName: "rectangle.stack.badge.play", title: "Due Payments", subtitle: "Payments for loans done at BEGINNING of payment period", destination: {AnyView(DuePaymentsAtBegginingView())}),
         TileItem(iconName: "pawprint", title: "Due Payments", subtitle: "Payments for loans done at END of payment period", destination: {AnyView(MortgageView())}),
         TileItem(iconName: "questionmark.circle", title: "Help", destination: {AnyView(LoansAndSavingsView())}),
     ]

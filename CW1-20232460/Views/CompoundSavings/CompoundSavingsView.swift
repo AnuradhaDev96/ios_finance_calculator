@@ -47,8 +47,6 @@ struct CompoundSavingsView: View {
                     }
                     .navigationTitle("Compound Interest")
                     .navigationBarTitleDisplayMode(.inline)
-//                    .toolbarBackground(.bar, for: .navigationBar)
-                    .toolbarBackground(Color.white, for: .navigationBar)
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button{
