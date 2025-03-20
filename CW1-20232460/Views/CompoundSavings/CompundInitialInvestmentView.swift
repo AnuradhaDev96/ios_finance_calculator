@@ -19,7 +19,7 @@ struct CompundInitialInvestmentView: View {
     @StateObject private var result: CompoundInterestPresentValueResultViewModel
     
     init() {
-        let calculationService: ICompoundInterestCalculationService = CompounInterestCalculationService()
+        let calculationService: ICompoundInterestCalculationService = CompoundInterestCalculationService()
         _periodicInterestRateResult = StateObject(wrappedValue: PeriodicInterestResultViewModel(calculationService: calculationService))
         _totalCompoundingsOvertimeResult = StateObject(wrappedValue: TotalCompoundingsOfGivenPeriodResultViewModel(calculationService: calculationService))
         _result = StateObject(wrappedValue: CompoundInterestPresentValueResultViewModel(calculationService: calculationService))

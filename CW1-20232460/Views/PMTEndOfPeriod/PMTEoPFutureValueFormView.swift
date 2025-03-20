@@ -19,7 +19,7 @@ struct PMTEoPFutureValueFormView: View {
     @StateObject private var result: PMTEoPFutureValueResultViewModel
     
     init() {
-        let calculationService: ICompoundInterestCalculationService = CompounInterestCalculationService()
+        let calculationService: ICompoundInterestCalculationService = CompoundInterestCalculationService()
         let pmtCalculationService: IPMTEndOfPeriodCalculationService = PMTEndOfPeriodCalculationService()
         _periodicInterestRateResult = StateObject(wrappedValue: PeriodicInterestResultViewModel(calculationService: calculationService))
         _totalCompoundingsOvertimeResult = StateObject(wrappedValue: TotalCompoundingsOfGivenPeriodResultViewModel(calculationService: calculationService))

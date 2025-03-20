@@ -33,7 +33,7 @@ struct PMTEndOfPeriodView: View {
                         Text(GeneralResultType.initialInvestment.props.tabName)
                     }
                     .tag(GeneralResultType.initialInvestment)
-                HomeView()
+                PMTEoPFindContributionsFormView()
                     .tabItem {
                         Image(systemName: GeneralResultType.contribution.props.iconName)
                         Text(GeneralResultType.contribution.props.tabName)
@@ -41,7 +41,7 @@ struct PMTEndOfPeriodView: View {
                     .tag(GeneralResultType.contribution)
             }
         }
-        .navigationTitle("Seires of Payments")
+        .navigationTitle("Seires of Payments (EoPP)")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

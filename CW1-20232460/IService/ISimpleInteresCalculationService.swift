@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ICalculationService {
+protocol ISimpleInteresCalculationService {
     func getSimpleInterestFutureValue(annualInterest: Double, periodInYears: Double, principal: Double) -> Double
     func getSimpleInterest(annualInterest: Double, periodInYears: Double, principal: Double) -> Double
     func getSimpleInterestRate(periodInYears: Double, principal: Double, futureValue: Double) -> Double

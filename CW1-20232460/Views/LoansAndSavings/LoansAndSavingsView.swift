@@ -15,7 +15,7 @@ struct LoansAndSavingsView: View {
     @StateObject private var initialInvestmentResult: SimpleInterestPrincipalResultViewModel
     
     init() {
-        let calculationService: ICalculationService = CalculationService()
+        let calculationService: ISimpleInteresCalculationService = SimpleInterestCalculationService()
         _simpleInterestResult = StateObject(wrappedValue: SimpleInterestResultViewModel(calculationService: calculationService))
         _simpleInterestRateResult = StateObject(wrappedValue: SimpleInterestRateResultViewModel(calculationService: calculationService))
         _investmentDurationResult = StateObject(wrappedValue: SimpleInterestInvestmentDurationResultViewModel(calculationService: calculationService))

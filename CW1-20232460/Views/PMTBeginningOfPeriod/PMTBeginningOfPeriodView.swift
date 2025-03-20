@@ -37,7 +37,7 @@ struct PMTBeginningOfPeriodView: View {
                     .tag(GeneralResultType.contribution)
             }
         }
-        .navigationTitle("Seires of Payments")
+        .navigationTitle("Seires of Payments (BoPP")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

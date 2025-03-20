@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CalculationService: ICalculationService {
+class SimpleInterestCalculationService: ISimpleInteresCalculationService {
     func getSimpleInterestRate(periodInYears: Double, principal: Double, futureValue: Double) -> Double {
         let upper = futureValue - principal
         let lower = principal * periodInYears

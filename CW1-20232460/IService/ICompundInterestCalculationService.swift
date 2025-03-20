@@ -7,6 +7,7 @@
 protocol ICompoundInterestCalculationService {
     func getPeriodInterest(nominamAnnualInterest: Double, noOfCompoundingPeriods: Double) -> Double
     func getNoOfCompoundingsOvertime(compoundingsPerYear: Double, durationInYears: Double) -> Double
+    func getPeriodOfFacilityByTotalCompounds(totalCompounds: Double, noOfCompoundsPerYear: Double) -> Double
     func getFutureValue(presentValue: Double, periodicInterestRate: Double, totalCompoundingPeriods: Double) -> Double
     func getPresentValue(futureValue: Double, periodicInterestRate: Double, totalCompoundingPeriods: Double) -> Double
 }

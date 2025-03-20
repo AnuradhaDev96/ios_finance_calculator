@@ -22,4 +22,24 @@ class PMTEndOfPeriodCalculationService: IPMTEndOfPeriodCalculationService {
         
         return payment * accumulationFactor
     }
+    
+    // Find n
+    // From FV
+    // n = ln((Fv *i)/PMT) + 1) / ln(1 + i)
+    func getNoOfCompoundingsOvertimeBasedOnFutureValue(futureValue: Double, periodicInterestRate: Double, payment: Double) -> Double {
+        let upper = (futureValue * (periodicInterestRate/100) / payment) + 1
+        let lower = 1 + periodicInterestRate
+        
+        return log(upper) / log(lower)
+    }
+    
+    // Find n
+    // From PV
+    // n = (-ln(1 - (Pv * i / PMT)) / ln (1 + i)
+    func getNoOfCompoundingsOvertimeBasedOnPresentValue(presentValue: Double, periodicInterestRate: Double, payment: Double) -> Double {
+        let upper = 1 - (presentValue * (periodicInterestRate/100) / payment)
+        let lower = 1 + periodicInterestRate
+        
+        return -log(upper) / log(lower)
+    }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CompounInterestCalculationService: ICompoundInterestCalculationService {
+class CompoundInterestCalculationService: ICompoundInterestCalculationService {
     func getPresentValue(futureValue: Double, periodicInterestRate: Double, totalCompoundingPeriods: Double) -> Double {
         futureValue / pow(1 + periodicInterestRate/100, totalCompoundingPeriods)
     }
@@ -16,10 +16,17 @@ class CompounInterestCalculationService: ICompoundInterestCalculationService {
         return presentValue * pow(1 + periodicInterestRate/100, totalCompoundingPeriods)
     }
     
+    // n = m x t
     func getNoOfCompoundingsOvertime(compoundingsPerYear: Double, durationInYears: Double) -> Double {
         return compoundingsPerYear * durationInYears
     }
     
+    // t = n / m
+    func getPeriodOfFacilityByTotalCompounds(totalCompounds: Double, noOfCompoundsPerYear: Double) -> Double{
+        return totalCompounds / noOfCompoundsPerYear
+    }
+    
+    // i = j / m
     func getPeriodInterest(nominamAnnualInterest: Double, noOfCompoundingPeriods: Double) -> Double {
         return nominamAnnualInterest / noOfCompoundingPeriods
     }
