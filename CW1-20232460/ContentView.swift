@@ -16,7 +16,7 @@ struct ContentView: View {
         TileItem(iconName: "dollarsign.circle", title: "Mortgage", destination: {AnyView(MortgageView())}),
         TileItem(iconName: "rectangle.stack.badge.play", title: "Seires of Payments", subtitle: "Payments for loans done at BEGINNING of payment period", destination: {AnyView(PMTBeginningOfPeriodView())}),
         TileItem(iconName: "pawprint", title: "Seires of Payments", subtitle: "Payments for loans done at END of payment period", destination: {AnyView(PMTEndOfPeriodView())}),
-        TileItem(iconName: "questionmark.circle", title: "Help", destination: {AnyView(LoansAndSavingsView())}),
+        TileItem(iconName: "questionmark.circle", title: "Help", destination: {AnyView(HelpView())}),
     ]
     
     var body: some View {
