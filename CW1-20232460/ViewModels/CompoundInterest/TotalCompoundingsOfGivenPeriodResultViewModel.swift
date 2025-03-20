@@ -7,14 +7,14 @@
 
 import Foundation
 
-class TotalCompoundingsOvertimeResultViewModel: ObservableObject {
+class TotalCompoundingsOfGivenPeriodResultViewModel: ObservableObject {
     private let calculationService: ICompoundInterestCalculationService
     
     init(calculationService: ICompoundInterestCalculationService) {
         self.calculationService = calculationService
     }
     
-    @Published var noOfCompoundingsOvertime: Double = 0
+    @Published var noOfCompoundingsForPeriod: Double = 0
     @Published var alertDetails = AlertDetails()
     
     private func showMessage(alertKey: String, message: String) {
@@ -29,10 +29,10 @@ class TotalCompoundingsOvertimeResultViewModel: ObservableObject {
             return
         }
         
-        noOfCompoundingsOvertime = calculationService.getNoOfCompoundingsOvertime(compoundingsPerYear: m, durationInYears: t)
+        noOfCompoundingsForPeriod = calculationService.getNoOfCompoundingsOvertime(compoundingsPerYear: m, durationInYears: t)
     }
     
     func resetModel() {
-        noOfCompoundingsOvertime = 0
+        noOfCompoundingsForPeriod = 0
     }
 }

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct DuePaymentsAtBegginingView: View {
-    @State var selectedSideMenuTab:GeneralResultType = .futureValue
+struct PMTBeginningOfPeriodView: View {
+    @State var selectedSideMenuTab: GeneralResultType = .futureValue
     var body: some View {
         VStack {
             Text("Loans/Savings whose Payments are done at BEGINNING of payment period").font(.caption).multilineTextAlignment(.center).fontWeight(.light).foregroundColor(.gray).padding(.horizontal)
@@ -37,11 +37,11 @@ struct DuePaymentsAtBegginingView: View {
                     .tag(GeneralResultType.contribution)
             }
         }
-        .navigationTitle("Due Payments")
+        .navigationTitle("Seires of Payments")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
-    DuePaymentsAtBegginingView()
+    PMTBeginningOfPeriodView()
 }

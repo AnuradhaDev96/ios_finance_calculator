@@ -1,36 +1,51 @@
 //
-//  CompundInitialInvestmentView.swift
+//  PMTEoPPresentValueFormView.swift
 //  CW1-20232460
 //
-//  Created by Anuradha Hewa Siribaddana on 2025-03-18.
+//  Created by Anuradha Hewa Siribaddana on 2025-03-20.
 //
 
 import SwiftUI
 
-struct CompundInitialInvestmentView: View {
+struct PMTEoPPresentValueFormView: View {
     @State private var nominalInterestRate: String = ""
     @State var durationInYears: String = ""
-    @State var futureValue: String = ""
+    @State var paymentValue: String = ""
     @State private var selectedCompundingPeriodType: CompoundingPeriodType = .monthly
     @State private var compoundingPeriodPerYear: String = "\(CompoundingPeriodType.monthly.compoundingPeriodPerYear)"
     
     @StateObject private var periodicInterestRateResult: PeriodicInterestResultViewModel
     @StateObject private var totalCompoundingsOvertimeResult: TotalCompoundingsOfGivenPeriodResultViewModel
-    @StateObject private var result: CompoundInterestPresentValueResultViewModel
+    @StateObject private var result: PMTEoPPresentValueResultViewModel
     
     init() {
         let calculationService: ICompoundInterestCalculationService = CompounInterestCalculationService()
+        let pmtCalculationService: IPMTEndOfPeriodCalculationService = PMTEndOfPeriodCalculationService()
         _periodicInterestRateResult = StateObject(wrappedValue: PeriodicInterestResultViewModel(calculationService: calculationService))
         _totalCompoundingsOvertimeResult = StateObject(wrappedValue: TotalCompoundingsOfGivenPeriodResultViewModel(calculationService: calculationService))
-        _result = StateObject(wrappedValue: CompoundInterestPresentValueResultViewModel(calculationService: calculationService))
+        _result = StateObject(wrappedValue: PMTEoPPresentValueResultViewModel(calculationService: pmtCalculationService))
     }
     
-    var isFormInvalid: Bool {
-        return nominalInterestRate.isEmpty || durationInYears.isEmpty || futureValue.isEmpty || compoundingPeriodPerYear.isEmpty
+    private var isFormInvalid: Bool {
+        return nominalInterestRate.isEmpty || durationInYears.isEmpty || paymentValue.isEmpty || compoundingPeriodPerYear.isEmpty
     }
     
-    var canResetForm: Bool {
-        return !nominalInterestRate.isEmpty || !durationInYears.isEmpty || !futureValue.isEmpty
+    private var canResetForm: Bool {
+        return !nominalInterestRate.isEmpty || !durationInYears.isEmpty || !paymentValue.isEmpty
+    }
+    
+    private func resetForm() {
+        // State properties
+        nominalInterestRate = ""
+        durationInYears = ""
+        paymentValue = ""
+        selectedCompundingPeriodType = CompoundingPeriodType.monthly
+        compoundingPeriodPerYear = "\(CompoundingPeriodType.monthly.compoundingPeriodPerYear)"
+        
+        // View models
+        periodicInterestRateResult.resetModel()
+        totalCompoundingsOvertimeResult.resetModel()
+        result.resetModel()
     }
     
     var body: some View {
@@ -96,14 +111,14 @@ struct CompundInitialInvestmentView: View {
                 }
             }
             
-            Section(header: Text("Investment Details")) {
-                CustomNumberField(placeholder: "Future Value", text: $futureValue)
+            Section(header: Text("Payment Series Details")) {
+                CustomNumberField(placeholder: "Payment Installment", text: $paymentValue)
             }
             
             VStack {
                 Button(action: {
                     hideKeyboard()
-                    result.calculateResult(futureValue: futureValue, periodicInterestRate: periodicInterestRateResult.periodicInterestRate, totalCompoundingPeriods: totalCompoundingsOvertimeResult.noOfCompoundingsForPeriod)
+                    result.calculateResult(payment: paymentValue, periodicInterestRate: periodicInterestRateResult.periodicInterestRate, totalCompoundingPeriods: totalCompoundingsOvertimeResult.noOfCompoundingsForPeriod)
                 }) {
                     Text("Calculate")
                         .font(.headline)
@@ -123,31 +138,17 @@ struct CompundInitialInvestmentView: View {
             .buttonStyle(BorderlessButtonStyle())
             .listRowBackground(Color.clear)
             
-            CompoundInitialValueResultCard(result: result)
+            PMTEoPPresentValueResultCard(result: result)
         }
         .alert(result.alertDetails.alertKey, isPresented: $result.alertDetails.isPresented) {}
         message: {
             Text(result.alertDetails.message)
         }
     }
-    
-    private func resetForm() {
-        // State properties
-        nominalInterestRate = ""
-        durationInYears = ""
-        futureValue = ""
-        selectedCompundingPeriodType = CompoundingPeriodType.monthly
-        compoundingPeriodPerYear = "\(CompoundingPeriodType.monthly.compoundingPeriodPerYear)"
-        
-        // View models
-        periodicInterestRateResult.resetModel()
-        totalCompoundingsOvertimeResult.resetModel()
-        result.resetModel()
-    }
 }
 
-struct CompoundInitialValueResultCard: View {
-    @ObservedObject var result: CompoundInterestPresentValueResultViewModel
+struct PMTEoPPresentValueResultCard: View {
+    @ObservedObject var result: PMTEoPPresentValueResultViewModel
 
     var body: some View {
         VStack(alignment: .center, spacing: 2) {
@@ -167,5 +168,5 @@ struct CompoundInitialValueResultCard: View {
 }
 
 #Preview {
-    CompundInitialInvestmentView()
+    PMTEoPPresentValueFormView()
 }

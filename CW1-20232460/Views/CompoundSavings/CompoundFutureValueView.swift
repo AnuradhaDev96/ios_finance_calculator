@@ -15,13 +15,13 @@ struct CompoundFutureValueView: View {
     @State private var compoundingPeriodPerYear: String = "\(CompoundingPeriodType.monthly.compoundingPeriodPerYear)"
     
     @StateObject private var periodicInterestRateResult: PeriodicInterestResultViewModel
-    @StateObject private var totalCompoundingsOvertimeResult: TotalCompoundingsOvertimeResultViewModel
+    @StateObject private var totalCompoundingsOvertimeResult: TotalCompoundingsOfGivenPeriodResultViewModel
     @StateObject private var result: CompoundInterestFutureValueResultViewModel
     
     init() {
         let calculationService: ICompoundInterestCalculationService = CompounInterestCalculationService()
         _periodicInterestRateResult = StateObject(wrappedValue: PeriodicInterestResultViewModel(calculationService: calculationService))
-        _totalCompoundingsOvertimeResult = StateObject(wrappedValue: TotalCompoundingsOvertimeResultViewModel(calculationService: calculationService))
+        _totalCompoundingsOvertimeResult = StateObject(wrappedValue: TotalCompoundingsOfGivenPeriodResultViewModel(calculationService: calculationService))
         _result = StateObject(wrappedValue: CompoundInterestFutureValueResultViewModel(calculationService: calculationService))
     }
     
@@ -90,7 +90,7 @@ struct CompoundFutureValueView: View {
                         totalCompoundingsOvertimeResult.calculateCompoundingsOvertime(compoundingsPerYear: compoundingPeriodPerYear, durationInYears: newValue)
                     }
                 LabeledContent {
-                    Text("\(String(format: "%.2f", totalCompoundingsOvertimeResult.noOfCompoundingsOvertime))")
+                    Text("\(String(format: "%.2f", totalCompoundingsOvertimeResult.noOfCompoundingsForPeriod))")
                 } label: {
                     Text("Total Compounding Periods:").font(.subheadline)
                 }
@@ -103,7 +103,7 @@ struct CompoundFutureValueView: View {
             VStack {
                 Button(action: {
                     hideKeyboard()
-                    result.calculateResult(presentValue: presentValue, periodicInterestRate: periodicInterestRateResult.periodicInterestRate, totalCompoundingPeriods: totalCompoundingsOvertimeResult.noOfCompoundingsOvertime)
+                    result.calculateResult(presentValue: presentValue, periodicInterestRate: periodicInterestRateResult.periodicInterestRate, totalCompoundingPeriods: totalCompoundingsOvertimeResult.noOfCompoundingsForPeriod)
                 }) {
                     Text("Calculate")
                         .font(.headline)
