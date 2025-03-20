@@ -9,9 +9,9 @@ import Foundation
 
 
 class SimpleInterestRateResultViewModel: ObservableObject {
-    private let calculationService: ICalculationService
+    private let calculationService: ISimpleInteresCalculationService
     
-    init(calculationService: ICalculationService) {
+    init(calculationService: ISimpleInteresCalculationService) {
         self.calculationService = calculationService
     }
     

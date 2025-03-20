@@ -20,3 +20,12 @@ class AlertDetails {
     
     init() {}
 }
+
+enum CompoundResultType: String, CaseIterable, Identifiable {
+    case simple = "Interest Rate"
+    case simpleInterestRate = "Simple Interest Rate"
+    case investmentDuration = "Investment Duration"
+    case initialInvestment = "Initial Investment\n(Principal Amount)"
+    
+    var id: String {self.rawValue}
+}
